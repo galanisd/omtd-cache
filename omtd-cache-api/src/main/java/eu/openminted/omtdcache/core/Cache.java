@@ -34,9 +34,9 @@ public interface Cache {
 	/**
 	 * Retrieves the {@code data} that correspond to {@code dataID}.
 	 * @param dataID
-	 * @return a string representation of the data.
+	 * @return a representation of the data.
 	 */
-	public String getData(String dataID);
+	public Data getData(String dataID);
 	
 	/**
 	 * Stores the {@code data} that correspond to {@code dataID} in the {@code Cache}.
@@ -44,7 +44,7 @@ public interface Cache {
 	 * @param data
 	 * @return true or false depending on whether the put action has succeeded or not.
 	 */
-	public boolean putData(String dataID, String data);
+	public boolean putData(String dataID, Data data);
 		
 	/**
 	 * Deletes everything from the {@code Cache}.
