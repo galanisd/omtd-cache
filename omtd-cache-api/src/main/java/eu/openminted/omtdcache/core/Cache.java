@@ -4,9 +4,9 @@ import java.util.Iterator;
 
 /**
  * This interface defines the {@code Cache} API of OMTD. {@code Cache} stores
- * a piece of data (e.g. a publication) that has already been transfered from an external source. By using {@code Cache} we avoid 
- * fetching the same data multiple times. Each piece of data {@code data} is thought to have a unique id ({@code dataID}); 
- * for example, this can be calculated using an appropriate hash function.
+ * a piece of data (e.g. a publication) that has already been transfered from an external source; this way we avoid 
+ * fetching the same data multiple times. Each piece of {@code data} is thought to have a unique {@code dataID}. 
+ * For example, this can be calculated using an appropriate hash function.
  * @author galanisd 
  */
 public interface Cache {
@@ -26,7 +26,7 @@ public interface Cache {
 	public boolean remove(String dataID);
 	
 	/**
-	 * Lists all {@code dataID}'s of the {@code Cache}.
+	 * Lists all {@code dataID}s of the {@code Cache}.
 	 * @return an iterator over all IDs in the Store.
 	 */
 	public Iterator<String> getIDs();
@@ -34,7 +34,7 @@ public interface Cache {
 	/**
 	 * Retrieves the {@code data} that correspond to {@code dataHash}.
 	 * @param dataHash
-	 * @return a string representation the data.
+	 * @return a string representation of the data.
 	 */
 	public String getData(String dataHash);
 	
@@ -42,7 +42,7 @@ public interface Cache {
 	 * Stores the {@code data} that correspond to {@code dataHash} in the {@code Cache}.
 	 * @param dataHash
 	 * @param data
-	 * @return
+	 * @return true or false depending on whether the put action has succeeded or not.
 	 */
 	public boolean putData(String dataID, String data);
 		
