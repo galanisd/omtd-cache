@@ -13,7 +13,7 @@ public class Buckets {
 	}
 	
 	public int getBucket(String str){
-		int i = str.hashCode();		
+		int i = Math.abs(str.hashCode());		
 		int bucket = i % buckets;
 		return bucket;
 	}

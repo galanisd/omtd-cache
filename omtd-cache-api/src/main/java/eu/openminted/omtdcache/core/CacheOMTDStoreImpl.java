@@ -44,7 +44,7 @@ public class CacheOMTDStoreImpl implements Cache{
 	
 	@Override
 	public boolean contains(String dataID) {
-		String subArchiveId = getSubArchive(dataID);		
+		String subArchiveId = buildArchiveName(dataID);		
 		StoreResponse resp = OMTDStoreHandler.fileExistsInArchive(subArchiveId, dataID);
 		return resp != null && resp.getResponse().equalsIgnoreCase("true");		
 	}
@@ -53,7 +53,7 @@ public class CacheOMTDStoreImpl implements Cache{
 	public boolean remove(String dataID) {
 		boolean exists = contains(dataID); 
 		if(exists){
-			String subArchiveId = getSubArchive(dataID);
+			String subArchiveId = buildArchiveName(dataID);
 			StoreResponse resp =  OMTDStoreHandler.deleteArchive(subArchiveId);
 			return resp.getResponse().equalsIgnoreCase("true");
 		}else{
@@ -62,18 +62,17 @@ public class CacheOMTDStoreImpl implements Cache{
 	}
 
 	@Override
-	public Data getData(String dataID) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean putData(String dataID, Data data) {
+		String subArchiveId = buildArchiveName(dataID);	
+		StoreResponse resp = OMTDStoreHandler.storeFile(data.getBytes(), subArchiveId, dataID);
+		return resp.getResponse().equalsIgnoreCase("true");
 	}
 
 	@Override
-	public boolean putData(String dataID, Data data) {
-		//String subArchiveId = getSubArchive(dataID);	
-		//StoreResponse resp = OMTDStoreHandler.s
-		return false;
+	public Data getData(String dataID) {		
+		return null;
 	}
-
+	
 	@Override
 	public boolean removeAll() {
 		StoreResponse resp = OMTDStoreHandler.deleteArchive(cacheID);
@@ -87,8 +86,8 @@ public class CacheOMTDStoreImpl implements Cache{
 	}
 	
 	// == === ==
-	private String getSubArchive(String dataID){
-		String subArchiveId = cacheID + "/" + bucketsManager.getBucket(dataID) + "";
-		return subArchiveId;
+	private String buildArchiveName(String dataID){
+		String archiveID = cacheID + "/" + bucketsManager.getBucket(dataID) + "";
+		return archiveID;
 	}
 }

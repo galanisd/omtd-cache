@@ -1,5 +1,9 @@
 package eu.openminted.omtdcache.core;
 
+/**
+ * @author galanisd
+ *
+ */
 public class CacheProperties {
 	
 	private String cacheID;

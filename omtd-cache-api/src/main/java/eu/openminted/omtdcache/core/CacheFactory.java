@@ -3,6 +3,10 @@ package eu.openminted.omtdcache.core;
 import eu.openminted.store.common.OMTDStoreHandler;
 import eu.openminted.store.restclient.StoreRESTClient;
 
+/**
+ * @author galanisd
+ *
+ */
 public class CacheFactory {
 			
 	public static Cache getCache(CacheProperties cacheProperties){
