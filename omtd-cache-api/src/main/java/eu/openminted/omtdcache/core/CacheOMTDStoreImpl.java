@@ -16,7 +16,7 @@ public class CacheOMTDStoreImpl implements Cache{
 	
 	private OMTDStoreHandler OMTDStoreHandler;		
 	private String cacheID;
-	private Buckets bucketsManager;
+	private CacheBucketsManager bucketsManager;
 	
 	/**
 	 * Constructor
@@ -27,7 +27,7 @@ public class CacheOMTDStoreImpl implements Cache{
 	public CacheOMTDStoreImpl(OMTDStoreHandler OMTDStoreHandler, String cacheID, boolean overwrite, int buckets){
 		this.OMTDStoreHandler = OMTDStoreHandler;
 		this.cacheID = cacheID;
-		this.bucketsManager = new Buckets(buckets);
+		this.bucketsManager = new CacheBucketsManager(buckets);
 		
 		if(overwrite){
 			//delete & re-create.
@@ -70,6 +70,9 @@ public class CacheOMTDStoreImpl implements Cache{
 
 	@Override
 	public Data getData(String dataID) {		
+		String subArchiveId = buildArchiveName(dataID);
+		// 
+		
 		return null;
 	}
 	

@@ -9,6 +9,11 @@ import eu.openminted.store.restclient.StoreRESTClient;
  */
 public class CacheFactory {
 			
+	/**
+	 * Creates a Cache object as this is specified from {@code CacheProperties}
+	 * @param cacheProperties
+	 * @return
+	 */
 	public static Cache getCache(CacheProperties cacheProperties){
 		
 		if(cacheProperties.getType().equalsIgnoreCase(CacheOMTDStoreImpl.class.getName())){

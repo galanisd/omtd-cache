@@ -18,6 +18,5 @@ public class Data {
 	public void setBytes(byte[] bytes) {
 		this.bytes = bytes;
 	}
-	
-	
+		
 }

@@ -4,11 +4,11 @@ package eu.openminted.omtdcache.core;
  * @author galanisd
  *
  */
-public class Buckets {
+public class CacheBucketsManager {
 	
 	private int buckets;
 	
-	public Buckets(int b){
+	public CacheBucketsManager(int b){
 		this.buckets = b;
 	}
 	
