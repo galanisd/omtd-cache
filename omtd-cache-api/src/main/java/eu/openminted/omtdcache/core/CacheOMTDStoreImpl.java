@@ -41,6 +41,10 @@ public class CacheOMTDStoreImpl implements Cache{
 			}
 		}
 	}				
+
+	// == === ==
+	// Cache implementation methods.
+	// == === ==	
 	
 	@Override
 	public boolean contains(String dataID) {
@@ -51,8 +55,8 @@ public class CacheOMTDStoreImpl implements Cache{
 
 	@Override
 	public boolean remove(String dataID) {
-		boolean exists = contains(dataID); 
-		if(exists){
+		boolean dataIDExistsInCache = contains(dataID); 
+		if(dataIDExistsInCache){
 			String subArchiveId = buildArchiveName(dataID);
 			StoreResponse resp =  OMTDStoreHandler.deleteArchive(subArchiveId);
 			return resp.getResponse().equalsIgnoreCase("true");
@@ -68,11 +72,11 @@ public class CacheOMTDStoreImpl implements Cache{
 		return resp.getResponse().equalsIgnoreCase("true");
 	}
 
+	
 	@Override
 	public Data getData(String dataID) {		
 		String subArchiveId = buildArchiveName(dataID);
-		// 
-		
+				
 		return null;
 	}
 	
@@ -89,6 +93,8 @@ public class CacheOMTDStoreImpl implements Cache{
 	}
 	
 	// == === ==
+	// == === ==
+	
 	private String buildArchiveName(String dataID){
 		String archiveID = cacheID + "/" + bucketsManager.getBucket(dataID) + "";
 		return archiveID;

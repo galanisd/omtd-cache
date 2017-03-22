@@ -27,7 +27,7 @@ public class Main {
 		Cache myCache = CacheFactory.getCache(cacheProperties);
 		
 		// Run a simulation.
-		int dataChunksNum = 10000;
+		int dataChunksNum = 100;
 		int numOfChars = 200000;		
 		storeDataInCacheSimulation(myCache, dataChunksNum, numOfChars);
 
@@ -36,8 +36,8 @@ public class Main {
 	// == === ==
 	// == === ==	
 	/**
-	 * Simulates the data caching in Cache.
-	 * @param myCache
+	 * Runs a simulation of data caching.
+	 * @param myCache A {@code Cache} handler.
 	 * @param dataChunksNum Number of data chunks to be saved in Cache.
 	 * @param numOfChars Number of chars per chunk.
 	 */
