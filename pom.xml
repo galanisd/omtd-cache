@@ -18,6 +18,7 @@
 
 	<modules>
 		<module>./omtd-cache-api</module>
+		<module>./omtd-cache-id</module>
 	</modules>
 
 </project>
