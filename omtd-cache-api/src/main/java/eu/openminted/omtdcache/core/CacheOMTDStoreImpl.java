@@ -1,7 +1,12 @@
 package eu.openminted.omtdcache.core;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Iterator;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import eu.openminted.store.common.OMTDStoreHandler;
@@ -13,6 +18,8 @@ import eu.openminted.store.common.StoreResponse;
  *
  */
 public class CacheOMTDStoreImpl implements Cache{	
+	
+	private final static Logger log = LoggerFactory.getLogger(CacheOMTDStoreImpl.class);
 	
 	private OMTDStoreHandler OMTDStoreHandler;		
 	private String cacheID;
@@ -76,8 +83,24 @@ public class CacheOMTDStoreImpl implements Cache{
 	@Override
 	public Data getData(String dataID) {		
 		String subArchiveId = buildArchiveName(dataID);
-				
-		return null;
+		String fileName = subArchiveId + "/" + dataID;
+		
+		try{
+			File temp = File.createTempFile(dataID, ".tmp");
+			log.debug("Temp file : " + temp.getAbsolutePath());									
+			StoreResponse resp = OMTDStoreHandler.downloadFile(fileName, temp.getAbsolutePath());
+			
+			if(resp.getResponse().equalsIgnoreCase("true")){
+				byte [] bytes = Files.readAllBytes(Paths.get(temp.getAbsolutePath()));
+				Data data = new Data(bytes);
+				temp.delete();
+				return data;
+			}
+			
+			return null;
+		}catch(Exception e){
+			return null;	
+		}		
 	}
 	
 	@Override

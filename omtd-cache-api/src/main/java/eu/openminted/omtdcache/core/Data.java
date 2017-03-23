@@ -11,6 +11,10 @@ public class Data {
 		bytes = data.getBytes();
 	}
 
+	public Data(byte[] bytes){
+		this.bytes = bytes;
+	}
+	
 	public byte[] getBytes() {
 		return bytes;
 	}

@@ -10,6 +10,7 @@ import eu.openminted.omtdcache.core.CacheFactory;
 import eu.openminted.omtdcache.core.CacheOMTDStoreImpl;
 import eu.openminted.omtdcache.core.CacheProperties;
 import eu.openminted.omtdcache.core.Data;
+import eu.openminted.store.common.StoreResponse;
 
 public class Main {	
 	// == === ==	
@@ -27,7 +28,7 @@ public class Main {
 		Cache myCache = CacheFactory.getCache(cacheProperties);
 		
 		// Run a simulation.
-		int dataChunksNum = 100;
+		int dataChunksNum = 1000;
 		int numOfChars = 200000;		
 		storeDataInCacheSimulation(myCache, dataChunksNum, numOfChars);
 
@@ -45,7 +46,9 @@ public class Main {
 			 
 		int numOfDataChunksThatAlreadyExistInCache = 0;
 		int numOfSuccesfullyInsertedDataChunks = 0;
-				
+		int ties = 0;
+		int numOfSuccesfullyRemoved = 0;
+		
 		try{
 			MessageDigest messageDigest = MessageDigest.getInstance("MD5");
 				
@@ -58,14 +61,33 @@ public class Main {
 				boolean existsInCache = myCache.contains(dataID);
 				System.out.println(dataID + " exists in Cache:" + existsInCache);
 				
+				// Not exists in Cache.
 				if(!existsInCache){
+					
+					// Put it
 					Data data = new Data(dataStr);
 					myCache.putData(dataID, data);
 					
+					//Check if was inserted.
 					if(myCache.contains(dataID)){
+												
 						System.out.println(dataID + " was inserted in Cache:" + existsInCache);
 						numOfSuccesfullyInsertedDataChunks++;
+						// Retrieve data.
+						Data retrievedData = myCache.getData(dataID);
+						if(retrievedData != null){
+							String retrievedStr = new String(retrievedData.getBytes());
+							// Check if the retrieved data are the same with original ones. 
+							if(dataStr.equals(retrievedStr)){
+								ties++;
+							}
+						}
+												
+						//if(myCache.remove(dataID)){
+						//	numOfSuccesfullyRemoved++;
+						//}
 					}
+					
 				}else{
 					numOfDataChunksThatAlreadyExistInCache++;
 				}
@@ -77,6 +99,8 @@ public class Main {
 		System.out.println("Total:" + dataChunksNum);
 		System.out.println("numOfDataChunksThatAlreadyExistInCache:" + numOfDataChunksThatAlreadyExistInCache);
 		System.out.println("numOfSuccesfullyInsertedDataChunks:" + numOfSuccesfullyInsertedDataChunks);
+		System.out.println("ties:" + ties);
+		System.out.println("numOfSuccesfullyRemoved:" + numOfSuccesfullyRemoved);
 	}
 	// == === ==
 }

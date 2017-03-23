@@ -54,6 +54,4 @@ public class CacheProperties {
 		this.buckets = buckets;
 	}	
 	
-	
-	
 }
