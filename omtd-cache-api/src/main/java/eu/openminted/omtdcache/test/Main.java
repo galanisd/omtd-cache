@@ -28,7 +28,7 @@ public class Main {
 		Cache myCache = CacheFactory.getCache(cacheProperties);
 		
 		// Run a simulation.
-		int dataChunksNum = 1000;
+		int dataChunksNum = 10000;
 		int numOfChars = 200000;		
 		storeDataInCacheSimulation(myCache, dataChunksNum, numOfChars);
 
@@ -68,7 +68,7 @@ public class Main {
 					Data data = new Data(dataStr);
 					myCache.putData(dataID, data);
 					
-					//Check if was inserted.
+					// Check if was inserted.
 					if(myCache.contains(dataID)){
 												
 						System.out.println(dataID + " was inserted in Cache:" + existsInCache);
