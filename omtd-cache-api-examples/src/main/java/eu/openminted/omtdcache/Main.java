@@ -1,4 +1,4 @@
-package eu.openminted.omtdcache.test;
+package eu.openminted.omtdcache;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -50,13 +50,12 @@ public class Main {
 		int numOfSuccesfullyRemoved = 0;
 		
 		try{
-			MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+			CacheDataID cacheDataIDProvider = new CacheDataIDMD5(); 
 				
 			for(int i = 0; i < dataChunksNum; i++){
 				
-				String dataStr = RandomStringUtils.randomAlphanumeric(numOfChars);
-				messageDigest.update(dataStr.getBytes());
-				String dataID = new BigInteger(1, messageDigest.digest()).toString(16);
+				String dataStr = RandomStringUtils.randomAlphanumeric(numOfChars);				
+				String dataID = cacheDataIDProvider.getID(dataStr.getBytes()); 
 							
 				boolean existsInCache = myCache.contains(dataID);
 				System.out.println(dataID + " exists in Cache:" + existsInCache);
