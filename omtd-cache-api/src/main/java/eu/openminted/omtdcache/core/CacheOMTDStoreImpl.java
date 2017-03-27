@@ -65,7 +65,7 @@ public class CacheOMTDStoreImpl implements Cache{
 		boolean dataIDExistsInCache = contains(dataID); 
 		if(dataIDExistsInCache){
 			String subArchiveId = buildArchiveName(dataID);
-			StoreResponse resp =  OMTDStoreHandler.deleteArchive(subArchiveId);
+			StoreResponse resp =  OMTDStoreHandler.deleteFile(subArchiveId, dataID);
 			return resp.getResponse().equalsIgnoreCase("true");
 		}else{
 			return false;

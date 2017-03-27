@@ -1,8 +1,5 @@
 package eu.openminted.omtdcache;
 
-import java.math.BigInteger;
-import java.security.MessageDigest;
-
 import org.apache.commons.lang3.RandomStringUtils;
 
 import eu.openminted.omtdcache.core.Cache;
@@ -10,7 +7,6 @@ import eu.openminted.omtdcache.core.CacheFactory;
 import eu.openminted.omtdcache.core.CacheOMTDStoreImpl;
 import eu.openminted.omtdcache.core.CacheProperties;
 import eu.openminted.omtdcache.core.Data;
-import eu.openminted.store.common.StoreResponse;
 
 public class Main {	
 	// == === ==	
@@ -28,7 +24,7 @@ public class Main {
 		Cache myCache = CacheFactory.getCache(cacheProperties);
 		
 		// Run a simulation.
-		int dataChunksNum = 10000;
+		int dataChunksNum = 1000;
 		int numOfChars = 200000;		
 		storeDataInCacheSimulation(myCache, dataChunksNum, numOfChars);
 
@@ -82,9 +78,9 @@ public class Main {
 							}
 						}
 												
-						//if(myCache.remove(dataID)){
-						//	numOfSuccesfullyRemoved++;
-						//}
+						if(myCache.remove(dataID)){
+							numOfSuccesfullyRemoved++;
+						}
 					}
 					
 				}else{
