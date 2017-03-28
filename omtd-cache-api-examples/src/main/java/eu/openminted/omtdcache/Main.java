@@ -1,6 +1,7 @@
 package eu.openminted.omtdcache;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.time.DurationFormatUtils;
 
 import eu.openminted.omtdcache.core.Cache;
 import eu.openminted.omtdcache.core.CacheFactory;
@@ -25,7 +26,7 @@ public class Main {
 		
 		// Run a simulation.
 		int dataChunksNum = 1000;
-		int numOfChars = 200000;		
+		int numOfChars = 2000000;		
 		storeDataInCacheSimulation(myCache, dataChunksNum, numOfChars);
 
 	}
@@ -39,7 +40,10 @@ public class Main {
 	 * @param numOfChars Number of chars per chunk.
 	 */
 	public static void storeDataInCacheSimulation(Cache myCache, int dataChunksNum, int numOfChars){
-			 
+
+		// Start clock.	 
+		long startTime = System.currentTimeMillis();
+		
 		int numOfDataChunksThatAlreadyExistInCache = 0;
 		int numOfSuccesfullyInsertedDataChunks = 0;
 		int ties = 0;
@@ -64,9 +68,9 @@ public class Main {
 					myCache.putData(dataID, data);
 					
 					// Check if was inserted.
-					if(myCache.contains(dataID)){
-												
-						System.out.println(dataID + " was inserted in Cache:" + existsInCache);
+					boolean succesfullyInserted = myCache.contains(dataID);
+					if(succesfullyInserted){												
+						System.out.println(dataID + " was inserted in Cache -> " + succesfullyInserted);
 						numOfSuccesfullyInsertedDataChunks++;
 						// Retrieve data.
 						Data retrievedData = myCache.getData(dataID);
@@ -85,6 +89,12 @@ public class Main {
 					
 				}else{
 					numOfDataChunksThatAlreadyExistInCache++;
+				}				
+				
+				if(i % 100 == 0){
+					long currentTime = System.currentTimeMillis();
+					long timeElapsed = currentTime - startTime;
+					System.out.println("Iteration: " + i + " Elapsed: " + DurationFormatUtils.formatDuration(timeElapsed, "HH:mm:ss.S"));					
 				}
 			}
 		}catch(Exception e){

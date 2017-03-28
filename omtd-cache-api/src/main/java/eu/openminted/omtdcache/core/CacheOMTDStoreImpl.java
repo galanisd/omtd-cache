@@ -49,9 +49,9 @@ public class CacheOMTDStoreImpl implements Cache{
 		}
 	}				
 
-	// == === ==
+	// == === == === == === == === ==
 	// Cache implementation methods.
-	// == === ==	
+	// == === == === == === == === ==	
 	
 	@Override
 	public boolean contains(String dataID) {
@@ -79,28 +79,33 @@ public class CacheOMTDStoreImpl implements Cache{
 		return resp.getResponse().equalsIgnoreCase("true");
 	}
 
-	
 	@Override
 	public Data getData(String dataID) {		
 		String subArchiveId = buildArchiveName(dataID);
 		String fileName = subArchiveId + "/" + dataID;
+		Data data = null;
+		File temp = null;
 		
 		try{
-			File temp = File.createTempFile(dataID, ".tmp");
+			temp = File.createTempFile(dataID, ".tmp");
 			log.debug("Temp file : " + temp.getAbsolutePath());									
 			StoreResponse resp = OMTDStoreHandler.downloadFile(fileName, temp.getAbsolutePath());
 			
 			if(resp.getResponse().equalsIgnoreCase("true")){
 				byte [] bytes = Files.readAllBytes(Paths.get(temp.getAbsolutePath()));
-				Data data = new Data(bytes);
-				temp.delete();
-				return data;
+				data = new Data(bytes);
 			}
-			
-			return null;
+						
 		}catch(Exception e){
 			return null;	
-		}		
+		}finally{
+			if(temp != null && temp.exists()){
+				boolean tempFileDeleted = temp.delete();
+				log.debug("Temp file deleted: " + tempFileDeleted);
+			}	
+		}
+				
+		return data;
 	}
 	
 	@Override
@@ -115,9 +120,8 @@ public class CacheOMTDStoreImpl implements Cache{
 		return null;
 	}
 	
-	// == === ==
-	// == === ==
-	
+	// == === == === == === == === ==
+	// == === == === == === == === ==	
 	private String buildArchiveName(String dataID){
 		String archiveID = cacheID + "/" + bucketsManager.getBucket(dataID) + "";
 		return archiveID;
