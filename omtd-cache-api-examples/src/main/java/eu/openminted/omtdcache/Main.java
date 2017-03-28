@@ -9,32 +9,15 @@ import eu.openminted.omtdcache.core.CacheOMTDStoreImpl;
 import eu.openminted.omtdcache.core.CacheProperties;
 import eu.openminted.omtdcache.core.Data;
 
+/**
+ * 
+ * @author galanisd
+ *
+ */
 public class Main {	
-	// == === ==	
-	public static void main(String args[]){
-		
-		// Define cache properties
-		CacheProperties cacheProperties = new CacheProperties();		
-		cacheProperties.setCacheID("OMTDCache");
-		cacheProperties.setRestEndpoint("http://localhost:8080/");
-		cacheProperties.setType(CacheOMTDStoreImpl.class.getName());
-		cacheProperties.setBuckets(100);
-		cacheProperties.setOverwrite(true);
-		
-		// Create a cache with these properties.
-		Cache myCache = CacheFactory.getCache(cacheProperties);
-		
-		// Run a simulation.
-		int dataChunksNum = 1000;
-		int numOfChars = 2000000;		
-		storeDataInCacheSimulation(myCache, dataChunksNum, numOfChars);
-
-	}
 	
-	// == === ==
-	// == === ==	
 	/**
-	 * Runs a simulation of data caching.
+	* Runs a simulation of data caching.
 	 * @param myCache A {@code Cache} handler.
 	 * @param dataChunksNum Number of data chunks to be saved in Cache.
 	 * @param numOfChars Number of chars per chunk.
@@ -81,7 +64,8 @@ public class Main {
 								ties++;
 							}
 						}
-												
+							
+						// Remove dataID.
 						if(myCache.remove(dataID)){
 							numOfSuccesfullyRemoved++;
 						}
@@ -107,5 +91,29 @@ public class Main {
 		System.out.println("ties:" + ties);
 		System.out.println("numOfSuccesfullyRemoved:" + numOfSuccesfullyRemoved);
 	}
+	// == === ==
+	
+	// == === ==	
+	public static void main(String args[]){
+		
+		// Define cache properties
+		CacheProperties cacheProperties = new CacheProperties();		
+		cacheProperties.setCacheID("OMTDCache");
+		cacheProperties.setRestEndpoint("http://localhost:8080/");
+		cacheProperties.setType(CacheOMTDStoreImpl.class.getName());
+		cacheProperties.setBuckets(100);
+		cacheProperties.setOverwrite(true);
+		
+		// Create a cache with these properties.
+		Cache myCache = CacheFactory.getCache(cacheProperties);
+		
+		// Run a simulation.
+		int dataChunksNum = 1000;
+		int numOfChars = 2000000;		
+		storeDataInCacheSimulation(myCache, dataChunksNum, numOfChars);
+
+	}
+	
+	// == === ==
 	// == === ==
 }
