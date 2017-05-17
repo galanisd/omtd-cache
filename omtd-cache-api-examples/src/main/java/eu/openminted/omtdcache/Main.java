@@ -33,7 +33,8 @@ public class Main {
 		int numOfSuccesfullyRemoved = 0;
 		
 		try{
-			CacheDataID cacheDataIDProvider = new CacheDataIDMD5(); 
+			//CacheDataID cacheDataIDProvider = new CacheDataIDMD5();
+			CacheDataID cacheDataIDProvider = new CacheDataIDSHA1();
 				
 			for(int i = 0; i < dataChunksNum; i++){
 				
